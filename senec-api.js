@@ -1,4 +1,5 @@
 const axios = require('axios');
+const SenecResponse = require('./senec-response');
 
 class SenecAPI {
   constructor(ipAddress) {
@@ -30,9 +31,7 @@ class SenecAPI {
         responseType: 'text',
       });
 
-      const jsonData = JSON.parse(response.data);
-
-      return jsonData;
+      return new SenecResponse(JSON.parse(response.data));
     } catch (error) {
       throw new Error(`Error fetching data: ${error.message}`);
     }
