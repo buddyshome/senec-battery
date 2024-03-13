@@ -4,7 +4,7 @@
   "description": "Pull properties from Senec batterie",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && node --inspect testscript.js",
+    "test": "npm run build && node --inspect ./build/testscript.js",
     "build": "tsc"
   },
   "repository": {

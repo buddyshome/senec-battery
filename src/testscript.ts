@@ -1,8 +1,8 @@
-const SenecAPI = require('./senec-api');
+import SenecAPI from './senec-api';
 
-const senecIpAddress = 'senec-master.linkzuhause.de';
+const senecIpAddress: string = 'senec-master.linkzuhause.de';
 
-const senec = new SenecAPI(senecIpAddress);
+const senec: SenecAPI = new SenecAPI(senecIpAddress);
 
 (async () => {
   try {
@@ -11,7 +11,7 @@ const senec = new SenecAPI(senecIpAddress);
     const statisticData = response.getStatisticData();
     const pm1obj1Data = response.getPM1OBJ1Data();
     const state = response.getEnergyState();
-    const statetext = response.getEnergyStateText(); 
+    const statetext = response.getEnergyStateText();
 
     console.log('Energy Data:', energyData);
     console.log('Statistic Data:', statisticData);
@@ -19,6 +19,6 @@ const senec = new SenecAPI(senecIpAddress);
     console.log('EnergyState:', state);
     console.log('EnergyStateText:', statetext);
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Error:', (error as Error).message);
   }
 })();
