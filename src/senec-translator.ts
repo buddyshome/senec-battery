@@ -1,4 +1,4 @@
-class SenecTranslator {
+export class SenecTranslator {
 
     private state_trans: { [key: string]: { [key: number]: string } };
 
@@ -492,5 +492,3 @@ class SenecTranslator {
         return this.state_trans["ENERGY_STAT_STATE.1"][iStateNbr];
     }
 }
-
-export = SenecTranslator

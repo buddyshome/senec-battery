@@ -1,6 +1,6 @@
-import SenecTranslator from './senec-translator';
+import { SenecTranslator } from './senec-translator';
 
-class SenecResponse {
+export class SenecResponse {
     private data: any;
     private SenecTranslator: SenecTranslator;
 
@@ -69,4 +69,3 @@ class SenecResponse {
     }
 }
 
-export default SenecResponse;

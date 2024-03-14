@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import SenecResponse from './senec-response';
+import { SenecResponse } from './senec-response';
 
 interface SenecData {
   ENERGY: {
@@ -19,7 +19,7 @@ interface SenecData {
   };
 }
 
-class SenecAPI {
+export class SenecAPI {
   private ipAddress: string;
 
   constructor(ipAddress: string) {
@@ -62,4 +62,3 @@ class SenecAPI {
   }
 }
 
-export default SenecAPI;
