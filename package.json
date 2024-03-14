@@ -1,6 +1,6 @@
 {
   "name": "senec-battery",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Pull properties from Senec battery",
   "main": "index.js",
   "scripts": {
