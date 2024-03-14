@@ -2,6 +2,8 @@
   "name": "senec-battery",
   "version": "1.1.0",
   "description": "Pull properties from Senec battery",
+  "main": "dist/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "test": "npm run build && node --inspect ./dist/test/testscript.js",
     "clean": "rimraf ./dist",
@@ -11,11 +13,17 @@
     "type": "git",
     "url": "https://github.com/buddyshome/senec-battery"
   },
+  "files": [
+    "README.md",
+    "config-sample.json",
+    "LICENSE",
+    "src",
+    "dist"
+  ],
   "author": "Alexander Link",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.7",
-    "senec-battery": "^1.0.0"
+    "axios": "^1.6.7"
   },
   "devDependencies": {
     "typescript": "^5.4.2",
