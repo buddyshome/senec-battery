@@ -1,7 +1,7 @@
 {
-  "name": "@buddyshome/senec-battery",
-  "version": "1.0.0",
-  "description": "Pull properties from Senec batterie",
+  "name": "senec-battery",
+  "version": "1.0.2",
+  "description": "Pull properties from Senec battery",
   "main": "index.js",
   "scripts": {
     "test": "npm run build && node --inspect ./dist/test/testscript.js",

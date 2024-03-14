@@ -1,6 +1,6 @@
 import SenecAPI from '../senec-api';
 
-const senecIpAddress: string = 'senec-master.linkzuhause.de';
+const senecIpAddress: string = '192.168.3.18';
 
 const senec: SenecAPI = new SenecAPI(senecIpAddress);
 
