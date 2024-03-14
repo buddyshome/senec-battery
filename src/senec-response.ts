@@ -1,36 +1,72 @@
 import SenecTranslator from './senec-translator';
 
 class SenecResponse {
-  private data: any;
-  private SenecTranslator: SenecTranslator;
+    private data: any;
+    private SenecTranslator: SenecTranslator;
 
-  constructor(data: any) {
-    this.data = data;
-    this.SenecTranslator = new SenecTranslator();
-  }
+    constructor(data: any) {
+        this.data = data;
+        this.SenecTranslator = new SenecTranslator();
+    }
 
-  getEnergyData(): any {
-    return this.data.ENERGY || {};
-  }
+    private HexToFloat32(sHex: string): number {
+        sHex = sHex.replace('fl_', '');
+        var int = parseInt(sHex, 16);
+        if (int > 0 || int < 0) {
+            var sign = (int >>> 31) ? -1 : 1;
+            var exp = (int >>> 23 & 0xff) - 127;
+            var mantissa = ((int & 0x7fffff) + 0x800000).toString(2);
+            var float32 = 0
+            for (let i = 0; i < mantissa.length; i += 1) 
+            { float32 += parseInt(mantissa[i]) ? Math.pow(2, exp) : 0; exp-- }
+            
+            var fullfloat = float32 * sign;
+            return Math.round(fullfloat);
+        } else return 0
+    }
 
-  getStatisticData(): any {
-    return this.data.STATISTIC || {};
-  }
+    // getEnergyData(): any {
+    //     return this.data.ENERGY || {};
+    // }
 
-  getPM1OBJ1Data(): any {
-    return this.data.PM1OBJ1 || {};
-  }
+    // getStatisticData(): any {
+    //     return this.data.STATISTIC || {};
+    // }
 
-  getEnergyState(): number {
-    const tmp = this.data.ENERGY.STAT_STATE.split('_');
-    const value = tmp[1];
-    const state_int = parseInt(value, 16);
-    return state_int;
-  }
+    // getPM1OBJ1Data(): any {
+    //     return this.data.PM1OBJ1 || {};
+    // }
+    getGridPower(): number {
+        return this.HexToFloat32( this.data.ENERGY.GUI_GRID_POW );
+    }
+    getHousePower() : number{
+        return this.HexToFloat32( this.data.ENERGY.GUI_HOUSE_POW );
+    }
+    getPVPower() : number {
+        return this.HexToFloat32( this.data.ENERGY.GUI_INVERTER_POWER ); 
+    }
+    /**
+     * Determines the Battery Level in Percentage
+     * @returns Percentage
+     */
+    getBatteryLevel() : number{
+        return this.HexToFloat32( this.data.ENERGY.GUI_BAT_DATA_FUEL_CHARGE ); 
+    }
+    getBatteryChargingPower() : number{
+        return this.HexToFloat32( this.data.ENERGY.GUI_BAT_DATA_POWER ); 
+    }
 
-  getEnergyStateText(): string {
-    return this.SenecTranslator.getEnergyStateText(this.getEnergyState());
-  }
+   
+    getEnergyState(): number {
+        const tmp = this.data.ENERGY.STAT_STATE.split('_');
+        const value = tmp[1];
+        const state_int = parseInt(value, 16);
+        return state_int;
+    }
+
+    getEnergyStateText(): string {
+        return this.SenecTranslator.getEnergyStateText(this.getEnergyState());
+    }
 }
 
 export default SenecResponse;

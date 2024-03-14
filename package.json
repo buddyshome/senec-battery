@@ -1,11 +1,12 @@
 {
-  "name": "senec-battery",
+  "name": "@buddyshome/senec-battery",
   "version": "1.0.0",
   "description": "Pull properties from Senec batterie",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && node --inspect ./build/testscript.js",
-    "build": "tsc"
+    "test": "npm run build && node --inspect ./dist/test/testscript.js",
+    "clean": "rimraf ./dist",
+    "build": "rimraf ./dist && tsc"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
     "axios": "^1.6.7"
   },
   "devDependencies": {
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "@types/node": "16.11.7",
+    "rimraf": "^5.0.0"
   }
 }
