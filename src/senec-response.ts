@@ -9,7 +9,7 @@ export class SenecResponse {
         this.SenecTranslator = new SenecTranslator();
     }
 
-    private HexToFloat32(sHex: string): number {
+    private HexToInt(sHex: string): number {
         sHex = sHex.replace('fl_', '');
         var int = parseInt(sHex, 16);
         if (int > 0 || int < 0) {
@@ -37,23 +37,23 @@ export class SenecResponse {
     //     return this.data.PM1OBJ1 || {};
     // }
     getGridPower(): number {
-        return this.HexToFloat32( this.data.ENERGY.GUI_GRID_POW );
+        return this.HexToInt( this.data.ENERGY.GUI_GRID_POW );
     }
     getHousePower() : number{
-        return this.HexToFloat32( this.data.ENERGY.GUI_HOUSE_POW );
+        return this.HexToInt( this.data.ENERGY.GUI_HOUSE_POW );
     }
     getPVPower() : number {
-        return this.HexToFloat32( this.data.ENERGY.GUI_INVERTER_POWER ); 
+        return this.HexToInt( this.data.ENERGY.GUI_INVERTER_POWER ); 
     }
     /**
      * Determines the Battery Level in Percentage
      * @returns Percentage
      */
     getBatteryLevel() : number{
-        return this.HexToFloat32( this.data.ENERGY.GUI_BAT_DATA_FUEL_CHARGE ); 
+        return this.HexToInt( this.data.ENERGY.GUI_BAT_DATA_FUEL_CHARGE ); 
     }
     getBatteryChargingPower() : number{
-        return this.HexToFloat32( this.data.ENERGY.GUI_BAT_DATA_POWER ); 
+        return this.HexToInt( this.data.ENERGY.GUI_BAT_DATA_POWER ); 
     }
 
    
