@@ -28,7 +28,7 @@ export class SenecAPI {
       if (this.ResponseBufferedDateExpire == null ||
         this.ResponseBufferedDateExpire.valueOf() <= lo_currentTime.valueOf()) //millisecond since midnight January 1, 1970 UTC.
       {
-        console.debug("%s - Cache expired have to read from battery", this.ipAddress)
+        //console.debug("%s - Cache expired have to read from battery", this.ipAddress)
         let lo_currTimein10 = new Date();
         lo_currTimein10.setMinutes(lo_currTimein10.getMinutes() + this.ExpMinutes); //add 10 minutes
 
