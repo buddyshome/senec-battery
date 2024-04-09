@@ -1,10 +1,11 @@
 import { SenecTranslator } from './senec-translator';
+import { SenecData } from './senec-data';
 
 export class SenecResponse {
-    private data: any;
+    private data: SenecData;
     private SenecTranslator: SenecTranslator;
 
-    constructor(data: any) {
+    constructor(data: SenecData) {
         this.data = data;
         this.SenecTranslator = new SenecTranslator();
     }

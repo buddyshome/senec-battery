@@ -1,29 +1,47 @@
 import axios, { AxiosResponse } from 'axios';
 import { SenecResponse } from './senec-response';
+import { SenecData } from './senec-data';
+import { Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout } from 'async-mutex';
 
-interface SenecData {
-  ENERGY: {
-    GUI_HOUSE_POW: string;
-    GUI_GRID_POW: string;
-    GUI_INVERTER_POWER: string;
-    GUI_BAT_DATA_POWER: string;
-    GUI_BAT_DATA_FUEL_CHARGE: string;
-    STAT_STATE: string;
-    STAT_STATE_TEXT: string;
-  };
-  STATISTIC: {
-    LIVE_GRID_IMPORT: string;
-  };
-  PM1OBJ1: {
-    P_AC: string;
-  };
-}
 
 export class SenecAPI {
   private ipAddress: string;
+  private ResponseBuffered!: SenecResponse;
+  private ResponseBufferedDateExpire!: Date;
+  private mutex: Mutex;
+  private ExpMinutes: number = 10;
 
   constructor(ipAddress: string) {
     this.ipAddress = ipAddress;
+    this.mutex = new Mutex();
+
+  }
+
+  async fetchDataBuffered(): Promise<SenecResponse> {
+
+    // Make sure we do not trigger parallel execution
+    const release = await this.mutex.acquire();
+    try {
+
+      var lo_currentTime = new Date();
+
+      if (this.ResponseBufferedDateExpire == null ||
+        this.ResponseBufferedDateExpire.valueOf() <= lo_currentTime.valueOf()) //millisecond since midnight January 1, 1970 UTC.
+      {
+        console.debug("%s - Cache expired have to read from battery", this.ipAddress)
+        let lo_currTimein10 = new Date();
+        lo_currTimein10.setMinutes(lo_currTimein10.getMinutes() + this.ExpMinutes); //add 10 minutes
+
+        this.ResponseBuffered = await this.fetchData();
+        this.ResponseBufferedDateExpire = lo_currTimein10;
+      }
+      release();
+      return this.ResponseBuffered;
+
+    } catch (e) {
+      release();
+      throw e;
+    }
   }
 
   async fetchData(): Promise<SenecResponse> {
@@ -55,7 +73,7 @@ export class SenecAPI {
         }
       );
 
-      return new SenecResponse(JSON.parse(response.data));
+      return new SenecResponse((<SenecData>JSON.parse(response.data)));
     } catch (error) {
       throw new Error(`Error fetching data: ${(error as Error).message}`);
     }
