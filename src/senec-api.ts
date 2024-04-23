@@ -9,7 +9,7 @@ export class SenecAPI {
   private ResponseBuffered!: SenecResponse;
   private ResponseBufferedDateExpire!: Date;
   private mutex: Mutex;
-  private ExpMinutes: number = 10;
+  private ExpSeconds: number = 10;
 
   constructor(ipAddress: string) {
     this.ipAddress = ipAddress;
@@ -30,7 +30,7 @@ export class SenecAPI {
       {
         //console.debug("%s - Cache expired have to read from battery", this.ipAddress)
         let lo_currTimein10 = new Date();
-        lo_currTimein10.setMinutes(lo_currTimein10.getMinutes() + this.ExpMinutes); //add 10 minutes
+        lo_currTimein10.setSeconds(lo_currTimein10.getSeconds() + this.ExpSeconds); //add 10 seconds which will also update the minutes in case neeeded
 
         this.ResponseBuffered = await this.fetchData();
         this.ResponseBufferedDateExpire = lo_currTimein10;
