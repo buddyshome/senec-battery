@@ -26,25 +26,26 @@ export class SenecResponse {
         } else return 0
     }
 
-    // getEnergyData(): any {
-    //     return this.data.ENERGY || {};
-    // }
+    private Round(n : number, dp : number ) : number
+    {   
+        const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
+        return Math.round(n * h) / h;
+    }
 
-    // getStatisticData(): any {
-    //     return this.data.STATISTIC || {};
-    // }
+    private ConvertWatt2KW ( iv_power : number ) : number 
+    {
+        let lv_kw = iv_power / 1000;
+        return this.Round( lv_kw, 3 );
+    }
 
-    // getPM1OBJ1Data(): any {
-    //     return this.data.PM1OBJ1 || {};
-    // }
     getGridPower(): number {
-        return this.HexToInt( this.data.ENERGY.GUI_GRID_POW );
+        return this.ConvertWatt2KW( this.HexToInt( this.data.ENERGY.GUI_GRID_POW ) );
     }
     getHousePower() : number{
-        return this.HexToInt( this.data.ENERGY.GUI_HOUSE_POW );
+        return  this.ConvertWatt2KW( this.HexToInt( this.data.ENERGY.GUI_HOUSE_POW ) );
     }
     getPVPower() : number {
-        return this.HexToInt( this.data.ENERGY.GUI_INVERTER_POWER ); 
+        return  this.ConvertWatt2KW( this.HexToInt( this.data.ENERGY.GUI_INVERTER_POWER )); 
     }
     /**
      * Determines the Battery Level in Percentage
@@ -54,7 +55,7 @@ export class SenecResponse {
         return this.HexToInt( this.data.ENERGY.GUI_BAT_DATA_FUEL_CHARGE ); 
     }
     getBatteryChargingPower() : number{
-        return this.HexToInt( this.data.ENERGY.GUI_BAT_DATA_POWER ); 
+        return this.ConvertWatt2KW( this.HexToInt( this.data.ENERGY.GUI_BAT_DATA_POWER ) ); 
     }
 
    
