@@ -1,7 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { SenecResponse } from './senec-response';
 import { SenecData } from './senec-data';
 import { Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout } from 'async-mutex';
+import https from 'https';
 
 
 export class SenecAPI {
@@ -10,11 +11,14 @@ export class SenecAPI {
   private ResponseBufferedDateExpire!: Date;
   private mutex: Mutex;
   private ExpSeconds: number = 10;
+  private sslUnsecure: boolean;
+  private ssl: boolean;
 
-  constructor(ipAddress: string) {
+  constructor(ipAddress: string, ssl:boolean=false, sslUnsecure:boolean=false) {
     this.ipAddress = ipAddress;
     this.mutex = new Mutex();
-
+    this.ssl = ssl;
+    this.sslUnsecure = sslUnsecure;
   }
 
   async fetchDataBuffered(): Promise<SenecResponse> {
@@ -45,9 +49,31 @@ export class SenecAPI {
   }
 
   async fetchData(): Promise<SenecResponse> {
+
+    let httpsAgent = undefined;
+
+    if( this.sslUnsecure && this.ssl )
+      {
+        //Allow Unsecure SSL
+        httpsAgent = new https.Agent({  
+           rejectUnauthorized: false
+        });
+      }
+    
+   
+  
+    // Define the Axios request configuration
+    const config: AxiosRequestConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      responseType: 'text',
+      httpsAgent,  // Add the https agent to the request config
+    };
+
     try {
       const response: AxiosResponse<string> = await axios.post(
-        `http://${this.ipAddress}/lala.cgi`,
+        `${( (this.ssl) ? 'https' : 'http')}://${this.ipAddress}/lala.cgi`,
         {
           ENERGY: {
             GUI_HOUSE_POW: '',
@@ -65,12 +91,7 @@ export class SenecAPI {
             P_AC: '',
           },
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          responseType: 'text',
-        }
+        config  // Pass the config object to the request
       );
 
       return new SenecResponse((<SenecData>JSON.parse(response.data)));
