@@ -52,7 +52,7 @@ export class SenecAPI {
 
     let httpsAgent = undefined;
 
-    if( this.sslUnsecure )
+    if( this.sslUnsecure && this.ssl )
       {
         //Allow Unsecure SSL
         httpsAgent = new https.Agent({  
