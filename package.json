@@ -1,6 +1,6 @@
 {
   "name": "senec-battery",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Pull properties from Senec battery",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
@@ -25,11 +25,11 @@
   "license": "ISC",
   "dependencies": {
     "async-mutex": "^0.5.0",
-    "axios": "^1.8.3"
+    "axios": "^1.8.4"
   },
   "devDependencies": {
     "@types/node": "16.11.7",
     "rimraf": "^5.0.10",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
