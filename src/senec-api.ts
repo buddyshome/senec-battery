@@ -14,7 +14,7 @@ export class SenecAPI {
   private sslUnsecure: boolean;
   private ssl: boolean;
 
-  constructor(ipAddress: string, ssl:boolean=false, sslUnsecure:boolean=false) {
+  constructor(ipAddress: string, ssl: boolean = false, sslUnsecure: boolean = false) {
     this.ipAddress = ipAddress;
     this.mutex = new Mutex();
     this.ssl = ssl;
@@ -52,16 +52,15 @@ export class SenecAPI {
 
     let httpsAgent = undefined;
 
-    if( this.sslUnsecure && this.ssl )
-      {
-        //Allow Unsecure SSL
-        httpsAgent = new https.Agent({  
-           rejectUnauthorized: false
-        });
-      }
-    
-   
-  
+    if (this.sslUnsecure && this.ssl) {
+      //Allow Unsecure SSL
+      httpsAgent = new https.Agent({
+        rejectUnauthorized: false
+      });
+    }
+
+
+
     // Define the Axios request configuration
     const config: AxiosRequestConfig = {
       headers: {
@@ -69,11 +68,12 @@ export class SenecAPI {
       },
       responseType: 'text',
       httpsAgent,  // Add the https agent to the request config
+      timeout: 5000, // Set timeout to 5 seconds
     };
 
     try {
       const response: AxiosResponse<string> = await axios.post(
-        `${( (this.ssl) ? 'https' : 'http')}://${this.ipAddress}/lala.cgi`,
+        `${((this.ssl) ? 'https' : 'http')}://${this.ipAddress}/lala.cgi`,
         {
           ENERGY: {
             GUI_HOUSE_POW: '',
@@ -95,8 +95,17 @@ export class SenecAPI {
       );
 
       return new SenecResponse((<SenecData>JSON.parse(response.data)));
-    } catch (error) {
-      throw new Error(`Error fetching data: ${(error as Error).message}`);
+    } catch (error:any) {
+     
+      if ( axios.isAxiosError(error) && error.code === 'ECONNABORTED' ) 
+      {
+        // Handle Axios-specific errors when we run into a timeout
+        return this.ResponseBuffered; // Return the buffered response if available
+
+      }
+      else {
+        throw new Error(`Error fetching data: ${(error as Error).message}`);
+      }
     }
   }
 }
