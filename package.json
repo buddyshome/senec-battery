@@ -1,6 +1,6 @@
 {
   "name": "senec-battery",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "Pull properties from Senec battery",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
@@ -9,6 +9,7 @@
     "clean": "rimraf ./dist",
     "build": "rimraf ./dist && tsc",
     "link": "npm unlink senec-battery && npm link",
+    "unlink": "npm unlink senec-battery",
     "packupdate": "npm update --save"
   },
   "repository": {
