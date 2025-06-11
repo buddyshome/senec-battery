@@ -68,7 +68,7 @@ export class SenecAPI {
       },
       responseType: 'text',
       httpsAgent,  // Add the https agent to the request config
-      timeout: 5000, // Set timeout to 5 seconds
+      timeout: 2000, // Set timeout to 2 seconds
     };
 
     try {
@@ -100,8 +100,8 @@ export class SenecAPI {
       if ( axios.isAxiosError(error) && error.code === 'ECONNABORTED' ) 
       {
         // Handle Axios-specific errors when we run into a timeout
+        console.warn(`Request to ${this.ipAddress} timed out. Returning buffered response.`);
         return this.ResponseBuffered; // Return the buffered response if available
-
       }
       else {
         throw new Error(`Error fetching data: ${(error as Error).message}`);
