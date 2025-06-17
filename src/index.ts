@@ -1,4 +1,4 @@
-export { SenecAPI } from "./senec-api";
+export { SenecAPI } from "./senec-api.js";
 
-export { SenecResponse } from "./senec-response";
+export { SenecResponse } from "./senec-response.js";
 

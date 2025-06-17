@@ -1,5 +1,5 @@
-import { SenecTranslator } from './senec-translator';
-import { SenecData } from './senec-data';
+import { SenecTranslator } from './senec-translator.js';
+import { SenecData } from './senec-data.js';
 
 export class SenecResponse {
     private data: SenecData;
