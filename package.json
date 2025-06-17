@@ -1,7 +1,8 @@
 {
   "name": "senec-battery",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "Pull properties from Senec battery",
+  "type": "module",
   "main": "dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { SenecResponse } from './senec-response';
-import { SenecData } from './senec-data';
+import { SenecResponse } from './senec-response.js';
+import { SenecData } from './senec-data.js';
 import { Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout } from 'async-mutex';
 import https from 'https';
 

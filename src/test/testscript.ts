@@ -1,4 +1,4 @@
-import { SenecAPI } from '../senec-api';
+import { SenecAPI } from '../senec-api.js';
 
 const senecIpAddress: string = '192.168.3.18';
 
