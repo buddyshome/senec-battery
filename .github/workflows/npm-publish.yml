@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   release:
     types: [published]
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,5 +23,5 @@ jobs:
 #      - run: npm config set _auth ${{ secrets.GITDEPLOY }} && npm config set registry $NPM_REGISTRY_URL && npm config set always-auth=true && npm config set email=email@email.com
       - run: npm ci && npm run build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITDEPLOY }}
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.GITDEPLOY }}
