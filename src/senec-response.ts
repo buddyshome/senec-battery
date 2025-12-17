@@ -69,5 +69,18 @@ export class SenecResponse {
     getEnergyStateText(): string {
         return this.SenecTranslator.getEnergyStateText(this.getEnergyState());
     }
+
+    /*
+        * Returns the Battery Temperature in °C
+    */
+    getBatteryTemperature(): number {
+        return this.HexToInt( this.data.TEMPMEASURE.BATTERY_TEMP ); 
+    }
+    /*
+        * Returns the Case Temperature in °C
+    */
+    getCaseTemperature(): number {
+        return this.HexToInt( this.data.TEMPMEASURE.CASE_TEMP );    
+    }
 }
 
