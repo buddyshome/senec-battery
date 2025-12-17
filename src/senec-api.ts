@@ -90,6 +90,12 @@ export class SenecAPI {
           PM1OBJ1: {
             P_AC: '',
           },
+          TEMPMEASURE: {
+            BATTERY_TEMP: '',
+            CASE_TEMP: '',
+            MCU_TEMP: '',
+            TEMP_DATA_COLLECTED: '',
+          }
         },
         config  // Pass the config object to the request
       );

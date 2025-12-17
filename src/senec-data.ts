@@ -15,4 +15,10 @@ export interface SenecData {
     PM1OBJ1: {
       P_AC: string;
     };
+    TEMPMEASURE: {
+            BATTERY_TEMP: string,
+            CASE_TEMP: string,
+            MCU_TEMP: string,
+            TEMP_DATA_COLLECTED: string,
+    };
   }

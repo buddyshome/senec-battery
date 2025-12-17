@@ -15,6 +15,8 @@ const senec: SenecAPI = new SenecAPI(senecIpAddress);
     console.log('BatteryLevel %:',  response.getBatteryLevel() );
     console.log('HousePower (KW):',  response.getHousePower() );
     console.log('PV Power (KW):',  response.getPVPower() );
+    console.log('Battery Temperature (°C):',  response.getBatteryTemperature() );
+    console.log('Case Temperature (°C):',  response.getCaseTemperature() );
 
 
 
